@@ -7,6 +7,6 @@ public interface IAssignmentService
     Task<IEnumerable<DisplayAssignmentDTO>> GetAll();
     Task<DisplayAssignmentDTO> GetOne(int id);
     Task<DisplayAssignmentDTO> Create(CreateAssignmentDTO request);
-    Task<DisplayAssignmentDTO> Update(CreateAssignmentDTO request);
+    Task<DisplayAssignmentDTO> Update(CreateAssignmentDTO request, int id);
     Task Delete(int id);
 }

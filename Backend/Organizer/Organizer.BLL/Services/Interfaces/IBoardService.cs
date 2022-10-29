@@ -7,6 +7,6 @@ public interface IBoardService
     Task<IEnumerable<DisplayBoardDTO>> GetAll();
     Task<DisplayBoardDTO> GetOne(int id);
     Task<DisplayBoardDTO> Create(CreateBoardDTO request);
-    Task<DisplayBoardDTO> Update(UpdateBoardDTO request);
+    Task<DisplayBoardDTO> Update(UpdateBoardDTO request, int id);
     Task Delete(int id);
 }

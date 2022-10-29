@@ -7,6 +7,6 @@ public interface IStepService
     Task<IEnumerable<DisplayStepDTO>> GetAll();
     Task<DisplayStepDTO> GetOne(int id);
     Task<DisplayStepDTO> Create(CreateStepDTO request);
-    Task<DisplayStepDTO> Update(CreateStepDTO request);
+    Task<DisplayStepDTO> Update(CreateStepDTO request, int id);
     Task Delete(int id);
 }
