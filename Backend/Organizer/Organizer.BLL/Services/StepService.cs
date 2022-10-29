@@ -43,7 +43,7 @@ public class StepService : IStepService
         return _mapper.Map<DisplayStepDTO>(step);
     }
 
-    public async Task<DisplayStepDTO> Update(CreateStepDTO request, int id)
+    public async Task<DisplayStepDTO> Update(UpdateStepDTO request, int id)
     {
         var step = await _context.Steps.FirstOrDefaultAsync(src => src.Id == id);
         if (step == null)

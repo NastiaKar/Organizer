@@ -46,7 +46,7 @@ public class AssignmentService : IAssignmentService
         return _mapper.Map<DisplayAssignmentDTO>(assignment);
     }
 
-    public async Task<DisplayAssignmentDTO> Update(CreateAssignmentDTO request, int id)
+    public async Task<DisplayAssignmentDTO> Update(UpdateAssignmentDTO request, int id)
     {
         var assignment = await _context.Assignments.FirstOrDefaultAsync(src => src.Id == id);
         if (assignment == null)
