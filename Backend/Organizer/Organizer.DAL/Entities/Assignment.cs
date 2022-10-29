@@ -11,7 +11,7 @@ public class Assignment
     public DateTime StartTime { get; set; }
     public DateTime Deadline { get; set; }
     public List<Step> Steps { get; set; } = null!;
-    public State State { get; set; }
+    public State State { get; set; } = State.ToDo;
     [ForeignKey(nameof(Board))]
     public int BoardId { get; set; }
     public Board Board { get; set; } = null!;
