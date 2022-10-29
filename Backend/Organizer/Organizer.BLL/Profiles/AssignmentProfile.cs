@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Organizer.BLL.Extensions;
 using Organizer.DAL.Entities;
 using Organizer.Models.DTOs.Assignment;
 using Organizer.Models.DTOs.Step;
@@ -14,9 +15,13 @@ public class AssignmentProfile : Profile
 
         CreateMap<CreateAssignmentDTO, Assignment>();
         
-        CreateMap<UpdateAssignmentDTO, Assignment>();
+        CreateMap<UpdateAssignmentDTO, Assignment>().ForMember(dest => dest.State,
+            opt => opt.MapFrom(src => src.State.ConvertToState()));
         
-        CreateMap<Assignment, DisplayAssignmentDTO>().ForMember(dest => dest.Steps,
-            options => options.MapFrom(a => mapper.Map<List<DisplayStepDTO>>(a.Steps)));
+        CreateMap<Assignment, DisplayAssignmentDTO>()
+            .ForMember(dest => dest.Steps,
+            opt => opt.MapFrom(src => mapper.Map<List<DisplayStepDTO>>(src.Steps)))
+            .ForMember(dest => dest.State,
+                opt => opt.MapFrom(src => src.State.ToString()));
     }
 }

@@ -11,7 +11,7 @@ public class DisplayAssignmentDTO
     public DateTime StartTime { get; set; }
     public DateTime Deadline { get; set; }
     public List<DisplayStepDTO> Steps { get; set; } = null!;
-    public State State { get; set; }
+    public string State { get; set; } = String.Empty;
     public int BoardId { get; set; }
     public DisplayBoardDTO Board { get; set; } = null!;
     public bool IsCompleted { get; set; }

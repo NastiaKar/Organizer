@@ -6,6 +6,6 @@ public class UpdateAssignmentDTO
     public string Description { get; set; } = String.Empty;
     public DateTime StartTime { get; set; }
     public DateTime Deadline { get; set; }
-    public State State { get; set; }
+    public string State { get; set; } = String.Empty;
     public bool IsCompleted { get; set; }
 }
