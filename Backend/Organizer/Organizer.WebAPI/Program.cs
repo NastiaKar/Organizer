@@ -1,13 +1,15 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Organizer.BLL.Configure;
 using Organizer.BLL.Profiles;
 using Organizer.BLL.Services;
 using Organizer.BLL.Services.Interfaces;
 using Organizer.DAL.Data;
+using Organizer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.Configure<JwtConfig>(config => config.Secret = builder.Configuration["Secrets:JwtConfig"]);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -19,14 +21,16 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IStepService, StepService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocumentation();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -34,9 +38,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

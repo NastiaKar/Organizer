@@ -69,7 +69,12 @@ namespace Organizer.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Boards");
                 });
@@ -135,6 +140,17 @@ namespace Organizer.DAL.Migrations
                     b.Navigation("Board");
                 });
 
+            modelBuilder.Entity("Organizer.DAL.Entities.Board", b =>
+                {
+                    b.HasOne("Organizer.DAL.Entities.User", "User")
+                        .WithMany("Boards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Organizer.DAL.Entities.Step", b =>
                 {
                     b.HasOne("Organizer.DAL.Entities.Assignment", "Assignment")
@@ -154,6 +170,11 @@ namespace Organizer.DAL.Migrations
             modelBuilder.Entity("Organizer.DAL.Entities.Board", b =>
                 {
                     b.Navigation("Assignments");
+                });
+
+            modelBuilder.Entity("Organizer.DAL.Entities.User", b =>
+                {
+                    b.Navigation("Boards");
                 });
 #pragma warning restore 612, 618
         }
