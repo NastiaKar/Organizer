@@ -13,6 +13,4 @@ public class DisplayAssignmentDTO
     public List<DisplayStepDTO> Steps { get; set; } = null!;
     public string State { get; set; } = String.Empty;
     public int BoardId { get; set; }
-    public DisplayBoardDTO Board { get; set; } = null!;
-    public bool IsCompleted { get; set; }
 }

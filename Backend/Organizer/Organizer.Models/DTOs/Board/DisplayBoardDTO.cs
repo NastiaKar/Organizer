@@ -5,6 +5,6 @@ namespace Organizer.Models.DTOs.Board;
 public class DisplayBoardDTO
 {
     public int Id { get; set; }
-    public int Name { get; set; }
-    public List<DisplayAssignmentDTO> Assignments { get; set; } = null!;
+    public string Name { get; set; } = String.Empty;
+    public List<DisplayAssignmentDTO> Assignments { get; set; } = new();
 }

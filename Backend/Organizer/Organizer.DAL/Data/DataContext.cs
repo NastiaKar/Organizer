@@ -16,10 +16,10 @@ public class DataContext : DbContext
     {
         modelBuilder.Entity<User>(user =>
         {
-            user
-                .HasMany(u => u.Boards)
-                .WithOne(b => b.User)
-                .OnDelete(DeleteBehavior.Cascade);
+            // user
+            //     .HasMany(u => u.Boards)
+            //     .WithOne(b => b.User)
+            //     .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Board>(board =>

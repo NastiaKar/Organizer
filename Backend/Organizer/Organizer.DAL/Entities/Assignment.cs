@@ -15,5 +15,4 @@ public class Assignment
     [ForeignKey(nameof(Board))]
     public int BoardId { get; set; }
     public Board Board { get; set; } = null!;
-    public bool IsCompleted { get; set; }
 }

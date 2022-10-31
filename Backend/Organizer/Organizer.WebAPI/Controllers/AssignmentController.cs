@@ -24,7 +24,7 @@ public class AssignmentController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOne(int id)
     {
-        return Ok(_service.GetOne(id));
+        return Ok(await _service.GetOne(id));
     }
 
     [HttpPost]
