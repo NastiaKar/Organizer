@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Organizer.DAL.Entities.Base;
 
 namespace Organizer.DAL.Entities;
 
-public class Board
+public class Board : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = String.Empty;
     public List<Assignment> Assignments { get; set; } = null!;
     [ForeignKey(nameof(UserId))]

@@ -5,6 +5,8 @@ using Organizer.BLL.Profiles;
 using Organizer.BLL.Services;
 using Organizer.BLL.Services.Interfaces;
 using Organizer.DAL.Data;
+using Organizer.DAL.Repositories;
+using Organizer.DAL.Repositories.Interfaces;
 using Organizer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtConfig>(config => config.Secret = builder.Configuration["Secrets:JwtConfig"]);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration["Secrets:ConnectionString"]);
 });
 builder.Services.AddAutoMapper(config =>
 {
@@ -22,6 +24,8 @@ builder.Services.AddScoped<IBoardService, BoardService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IStepService, StepService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddControllers();

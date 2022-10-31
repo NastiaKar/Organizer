@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Organizer.DAL.Entities.Base;
 using Organizer.Models;
 
 namespace Organizer.DAL.Entities;
 
-public class Assignment
+public class Assignment : BaseEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = String.Empty;
     public string Description { get; set; } = String.Empty;
     public DateTime StartTime { get; set; }

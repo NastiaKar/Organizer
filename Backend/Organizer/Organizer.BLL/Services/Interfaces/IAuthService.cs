@@ -4,6 +4,6 @@ namespace Organizer.BLL.Services.Interfaces;
 
 public interface IAuthService
 {
-    Task<AuthResult> RegisterAsync(UserRegisterRequest registerUser);
-    Task<AuthResult> LoginAsync(UserLoginRequest loginUser);
+    Task<AuthResult> RegisterAsync(UserRegisterRequest request);
+    Task<AuthResult> LoginAsync(UserLoginRequest request);
 }
