@@ -21,16 +21,13 @@ public class BoardService : IBoardService
     
     public async Task<IEnumerable<DisplayBoardDTO>> GetAll()
     {
-        var boards = await Task.Run(() => _repo.Table
-            .Include(b => b.Assignments));
+        var boards = await _repo.GetAllAsync();
         return _mapper.Map<IEnumerable<DisplayBoardDTO>>(boards);
     }
 
     public async Task<DisplayBoardDTO> GetOne(int id)
     {
-        var board = await _repo.Table
-            .Include(b => b.Assignments)
-            .FirstOrDefaultAsync(b => b.Id == id);
+        var board = await _repo.FindAsync(id);
         if (board == null)
             throw new Exception("Entity not found");
         

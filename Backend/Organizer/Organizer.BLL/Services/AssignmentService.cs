@@ -22,16 +22,13 @@ public class AssignmentService : IAssignmentService
     
     public async Task<IEnumerable<DisplayAssignmentDTO>> GetAll()
     {
-        var assignments = await Task.Run(() => _repo.Table
-            .Include(a => a.Steps));
+        var assignments = await _repo.GetAllAsync();
         return _mapper.Map<IEnumerable<DisplayAssignmentDTO>>(assignments);
     }
 
     public async Task<DisplayAssignmentDTO> GetOne(int id)
     {
-        var assignment = await _repo.Table
-            .Include(a => a.Steps)
-            .FirstOrDefaultAsync(b => b.Id == id);
+        var assignment = await _repo.FindAsync(id);
         if (assignment == null)
             throw new Exception("Entity not found");
         

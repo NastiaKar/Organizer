@@ -27,8 +27,7 @@ public class StepService : IStepService
 
     public async Task<DisplayStepDTO> GetOne(int id)
     {
-        var step = await _repo.Table
-            .FirstOrDefaultAsync(s => s.Id == id);
+        var step = await _repo.FindAsync(id);
         if (step == null)
             throw new Exception("Entity not found");
 
