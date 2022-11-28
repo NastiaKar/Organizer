@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtConfig>(config => config.Secret = builder.Configuration["Secrets:JwtConfig"]);
 builder.Services.AddDbContext<DataContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration["Secrets:ConnectionString"]);
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAutoMapper(config =>
 {
