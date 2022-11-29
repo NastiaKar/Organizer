@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Organizer.DAL.Data;
 using Organizer.DAL.Entities;
 using Organizer.DAL.Repositories.Base;
+using Organizer.DAL.Repositories.Interfaces;
 
 namespace Organizer.DAL.Repositories;
 
-public class StepRepo : BaseRepo<Step>
+public class StepRepo : BaseRepo<Step>, IStepRepo
 {
     public StepRepo(DataContext context) : base(context) { }
 

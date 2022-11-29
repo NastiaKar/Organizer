@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Organizer.BLL.Extensions;
 using Organizer.BLL.Services.Interfaces;
 using Organizer.Models.DTOs.Board;
 
@@ -9,11 +10,11 @@ namespace Organizer.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [Route("api/[controller]")]
 [ApiController]
-public class BoardController : ControllerBase
+public class UserBoardController : ControllerBase
 {
-    private readonly IBoardService _service;
+    private readonly IUserBoardService _service;
 
-    public BoardController(IBoardService service)
+    public UserBoardController(IUserBoardService service)
     {
         _service = service;
     }
@@ -21,13 +22,15 @@ public class BoardController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return Ok(await _service.GetAll());
+        int userId = HttpContext.GetUserId();
+        return Ok(await _service.GetAll(userId));
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOne(int id)
     {
-        return Ok(await _service.GetOne(id));
+        int userId = HttpContext.GetUserId();
+        return Ok(await _service.GetOne(userId, id));
     }
 
     [HttpPost]
@@ -35,7 +38,8 @@ public class BoardController : ControllerBase
     {
         try
         {
-            var displayBoardDto = await _service.Create(request);
+            int userId = HttpContext.GetUserId();
+            var displayBoardDto = await _service.Create(userId, request);
             return CreatedAtAction(nameof(GetOne), new {id = displayBoardDto.Id}, displayBoardDto);
         }
         catch (Exception)
@@ -49,7 +53,8 @@ public class BoardController : ControllerBase
     {
         try
         {
-            var displayBoardDto = await _service.Update(request, id);
+            int userId = HttpContext.GetUserId();
+            var displayBoardDto = await _service.Update(userId, request, id);
             return Ok(displayBoardDto);
         }
         catch (Exception)
@@ -63,7 +68,8 @@ public class BoardController : ControllerBase
     {
         try
         {
-            await _service.Delete(id);
+            int userId = HttpContext.GetUserId();
+            await _service.Delete(userId, id);
         }
         catch (Exception)
         {

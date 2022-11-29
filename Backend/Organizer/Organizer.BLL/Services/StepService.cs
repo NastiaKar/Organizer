@@ -10,10 +10,10 @@ namespace Organizer.BLL.Services;
 
 public class StepService : IStepService
 {
-    private readonly IRepo<Step> _repo;
+    private readonly IStepRepo _repo;
     private readonly IMapper _mapper;
 
-    public StepService(IRepo<Step> repo, IMapper mapper)
+    public StepService(IStepRepo repo, IMapper mapper)
     {
         _repo = repo;
         _mapper = mapper;

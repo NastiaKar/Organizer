@@ -20,12 +20,16 @@ builder.Services.AddAutoMapper(config =>
 {
     config.AddProfiles(new Profile[] { new BoardProfile(), new AssignmentProfile(), new StepProfile()});
 });
-builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<IUserBoardService, UserBoardService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IStepService, StepService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IAssignmentRepo, AssignmentRepo>();
+builder.Services.AddScoped<IBoardRepo, BoardRepo>();
+builder.Services.AddScoped<IStepRepo, StepRepo>();
+
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddControllers();

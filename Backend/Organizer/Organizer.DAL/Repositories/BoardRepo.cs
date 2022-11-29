@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Organizer.DAL.Data;
 using Organizer.DAL.Entities;
 using Organizer.DAL.Repositories.Base;
+using Organizer.DAL.Repositories.Interfaces;
 
 namespace Organizer.DAL.Repositories;
 
-public class BoardRepo : BaseRepo<Board>
+public class BoardRepo : BaseRepo<Board>, IBoardRepo
 {
     public BoardRepo(DataContext context) : base(context) { }
 
@@ -14,6 +15,7 @@ public class BoardRepo : BaseRepo<Board>
     public override async Task<IEnumerable<Board>> GetAllAsync()
     {
         return await Task.Run(() => Table
+            .Include(b => b.User)
             .Include(b => b.Assignments));
     }
 
@@ -22,6 +24,7 @@ public class BoardRepo : BaseRepo<Board>
         return await Table
             .Where(b => b.Id == id)
             .Include(b => b.Assignments)
+            .Include(b => b.User)
             .FirstOrDefaultAsync();
     }
 
@@ -31,6 +34,7 @@ public class BoardRepo : BaseRepo<Board>
             .AsNoTracking()
             .Where(b => b.Id == id)
             .Include(b => b.Assignments)
+            .Include(b => b.User)
             .FirstOrDefaultAsync();
     }
 }

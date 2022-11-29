@@ -12,9 +12,9 @@ namespace Organizer.BLL.Services;
 public class AssignmentService : IAssignmentService
 {
     private readonly IMapper _mapper;
-    private readonly IRepo<Assignment> _repo;
+    private readonly IAssignmentRepo _repo;
 
-    public AssignmentService(IMapper mapper, IRepo<Assignment> repo)
+    public AssignmentService(IMapper mapper, IAssignmentRepo repo)
     {
         _mapper = mapper;
         _repo = repo;

@@ -8,41 +8,51 @@ using Organizer.Models.DTOs.Board;
 
 namespace Organizer.BLL.Services;
 
-public class BoardService : IBoardService
+public class UserBoardService : IUserBoardService
 {
     private readonly IMapper _mapper;
-    private readonly IRepo<Board> _repo;
+    private readonly IBoardRepo _repo;
 
-    public BoardService(IMapper mapper, IRepo<Board> repo)
+    public UserBoardService(IMapper mapper, IBoardRepo repo)
     {
         _mapper = mapper;
         _repo = repo;
     }
     
-    public async Task<IEnumerable<DisplayBoardDTO>> GetAll()
+    public async Task<IEnumerable<DisplayBoardDTO>> GetAll(int userId)
     {
-        var boards = await _repo.GetAllAsync();
+        // var boards = await _repo.GetAllAsync();
+        var boards = await Task.Run(() => _repo.Table
+            .Include(b => b.User)
+            .Where(b => b.UserId == userId)
+            .Include(b => b.Assignments));
         return _mapper.Map<IEnumerable<DisplayBoardDTO>>(boards);
     }
 
-    public async Task<DisplayBoardDTO> GetOne(int id)
+    public async Task<DisplayBoardDTO> GetOne(int userId, int id)
     {
-        var board = await _repo.FindAsync(id);
+        // var board = await _repo.FindAsync(id);
+        var board = await Task.Run(() => _repo.Table
+            .Include(b => b.User)
+            .Where(b => b.UserId == userId)
+            .Include(b => b.Assignments)
+            .FirstOrDefaultAsync());
         if (board == null)
             throw new Exception("Entity not found");
         
         return _mapper.Map<DisplayBoardDTO>(board);
     }
 
-    public async Task<DisplayBoardDTO> Create(CreateBoardDTO request)
+    public async Task<DisplayBoardDTO> Create(int userId, CreateBoardDTO request)
     {
         var board = _mapper.Map<Board>(request);
+        board.UserId = userId;
         await _repo.AddAsync(board);
 
         return _mapper.Map<DisplayBoardDTO>(board);
     }
 
-    public async Task<DisplayBoardDTO> Update(UpdateBoardDTO request, int id)
+    public async Task<DisplayBoardDTO> Update(int userId, UpdateBoardDTO request, int id)
     {
         var board = await _repo.FindAsync(id);
         if (board == null)
@@ -53,7 +63,7 @@ public class BoardService : IBoardService
         return _mapper.Map<DisplayBoardDTO>(board);
     }
 
-    public async Task Delete(int id)
+    public async Task Delete(int userId, int id)
     {
         var board = await _repo.FindAsync(id);
         if (board == null)
