@@ -5,6 +5,7 @@ using Organizer.DAL.Data;
 using Organizer.DAL.Entities;
 using Organizer.DAL.Repositories.Interfaces;
 using Organizer.Models.DTOs.Board;
+using Organizer.Models.Exceptions;
 
 namespace Organizer.BLL.Services;
 
@@ -38,7 +39,7 @@ public class UserBoardService : IUserBoardService
             .Include(b => b.Assignments)
             .FirstOrDefaultAsync());
         if (board == null)
-            throw new Exception("Entity not found");
+            throw new UserBoardNotFoundException(nameof(board), "Board not found.");
         
         return _mapper.Map<DisplayBoardDTO>(board);
     }
@@ -56,7 +57,7 @@ public class UserBoardService : IUserBoardService
     {
         var board = await _repo.FindAsync(id);
         if (board == null)
-            throw new Exception("Entity not found");
+            throw new UserBoardNotFoundException(nameof(board), "Board not found.");
 
         _mapper.Map(request, board);
         await _repo.UpdateAsync(board!);
@@ -67,7 +68,7 @@ public class UserBoardService : IUserBoardService
     {
         var board = await _repo.FindAsync(id);
         if (board == null)
-            throw new Exception("Entity not found");
+            throw new UserBoardNotFoundException(nameof(board), "Board not found.");
 
         await _repo.DeleteAsync(board!);
     }

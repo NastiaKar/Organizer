@@ -1,5 +1,4 @@
 using System.Reflection;
-using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Organizer.BLL.Configure;
@@ -10,6 +9,7 @@ using Organizer.DAL.Data;
 using Organizer.DAL.Repositories;
 using Organizer.DAL.Repositories.Interfaces;
 using Organizer.Extensions;
+using Organizer.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +28,11 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAssignmentRepo, AssignmentRepo>();
 builder.Services.AddScoped<IBoardRepo, BoardRepo>();
 builder.Services.AddScoped<IStepRepo, StepRepo>();
-builder.Services.AddFluentValidation(config => config
-    .RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
+builder.Services.AddControllers(config => 
+        { config.Filters.Add<CustomExceptionFilterAttribute>(); })
+    .AddFluentValidation(config => 
+        config.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 

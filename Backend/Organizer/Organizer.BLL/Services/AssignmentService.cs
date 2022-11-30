@@ -6,6 +6,7 @@ using Organizer.DAL.Data;
 using Organizer.DAL.Entities;
 using Organizer.DAL.Repositories.Interfaces;
 using Organizer.Models.DTOs.Assignment;
+using Organizer.Models.Exceptions;
 
 namespace Organizer.BLL.Services;
 
@@ -30,7 +31,7 @@ public class AssignmentService : IAssignmentService
     {
         var assignment = await _repo.FindAsync(id);
         if (assignment == null)
-            throw new Exception("Entity not found");
+            throw new AssignmentNotFoundException(nameof(assignment),"Assignment not found.");
         
         return _mapper.Map<DisplayAssignmentDTO>(assignment);
     }
@@ -47,7 +48,7 @@ public class AssignmentService : IAssignmentService
     {
         var assignment = await _repo.FindAsync(id);
         if (assignment == null)
-            throw new Exception("Entity not found");
+            throw new AssignmentNotFoundException(nameof(assignment),"Assignment not found.");
 
         _mapper.Map(request, assignment);
         await _repo.UpdateAsync(assignment!);
@@ -58,7 +59,7 @@ public class AssignmentService : IAssignmentService
     {
         var assignment = await _repo.FindAsync(id);
         if (assignment == null)
-            throw new Exception("Entity not found");
+            throw new AssignmentNotFoundException(nameof(assignment),"Assignment not found.");
 
         await _repo.DeleteAsync(assignment!);
     }

@@ -5,6 +5,7 @@ using Organizer.DAL.Data;
 using Organizer.DAL.Entities;
 using Organizer.DAL.Repositories.Interfaces;
 using Organizer.Models.DTOs.Step;
+using Organizer.Models.Exceptions;
 
 namespace Organizer.BLL.Services;
 
@@ -29,7 +30,7 @@ public class StepService : IStepService
     {
         var step = await _repo.FindAsync(id);
         if (step == null)
-            throw new Exception("Entity not found");
+            throw new StepNotFoundException(nameof(step), "Step not found");
 
         return _mapper.Map<DisplayStepDTO>(step);
     }
@@ -46,7 +47,7 @@ public class StepService : IStepService
     {
         var step = await _repo.FindAsync(id);
         if (step == null)
-            throw new Exception("Entity not found");
+            throw new StepNotFoundException(nameof(step), "Step not found");
 
         _mapper.Map(request, step);
         await _repo.UpdateAsync(step!);
@@ -57,7 +58,7 @@ public class StepService : IStepService
     {
         var step = await _repo.FindAsync(id);
         if (step == null)
-            throw new Exception("Entity not found");
+            throw new StepNotFoundException(nameof(step), "Step not found");
 
         await _repo.DeleteAsync(step);
     }
