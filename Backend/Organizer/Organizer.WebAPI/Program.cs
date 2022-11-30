@@ -1,4 +1,6 @@
+using System.Reflection;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Organizer.BLL.Configure;
 using Organizer.BLL.Profiles;
@@ -16,10 +18,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddAutoMapper(config =>
-{
-    config.AddProfiles(new Profile[] { new BoardProfile(), new AssignmentProfile(), new StepProfile()});
-});
+builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(BoardProfile)));
 builder.Services.AddScoped<IUserBoardService, UserBoardService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IStepService, StepService>();
@@ -29,6 +28,8 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAssignmentRepo, AssignmentRepo>();
 builder.Services.AddScoped<IBoardRepo, BoardRepo>();
 builder.Services.AddScoped<IStepRepo, StepRepo>();
+builder.Services.AddFluentValidation(config => config
+    .RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 

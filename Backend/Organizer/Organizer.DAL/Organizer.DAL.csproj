@@ -8,7 +8,7 @@
   </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Organizer.Models\Organizer.Models.csproj" />
+      <ProjectReference Include="..\Organizer.Common\Organizer.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizer.BLL", "Organizer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizer.DAL", "Organizer.DAL\Organizer.DAL.csproj", "{5F7AD3B7-D2D8-4CA7-932D-D9AF7701E64A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizer.Models", "Organizer.Models\Organizer.Models.csproj", "{2CED392E-2FB8-455D-9892-F6EBA07D3B56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organizer.Common", "Organizer.Common\Organizer.Common.csproj", "{2CED392E-2FB8-455D-9892-F6EBA07D3B56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

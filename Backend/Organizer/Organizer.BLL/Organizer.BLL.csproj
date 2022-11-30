@@ -21,7 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Organizer.DAL\Organizer.DAL.csproj" />
-      <ProjectReference Include="..\Organizer.Models\Organizer.Models.csproj" />
+      <ProjectReference Include="..\Organizer.Common\Organizer.Common.csproj" />
     </ItemGroup>
 
 </Project>
